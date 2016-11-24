@@ -1,0 +1,21 @@
+target 29 5 3 8
+target 36 3 3 8
+target 50 8 3 8
+target 61 3 4 5
+target 68 2 4 5
+target 74 5 4 5
+target 110 4 4 5
+target 118 3 4 5
+target 127 3 3 8
+launcher 30 90
+launcher 80 95
+launcher 123 89
+obstacle 44 52 1
+obstacle 59 51 6
+obstacle 70 53 2
+obstacle 94 51 1
+obstacle 98 53 5 4
+obstacle 106 51 1
+obstacle 114 43 2
+obstacle 118 41 5 2
+obstacle 124 40 1

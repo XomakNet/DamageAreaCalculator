@@ -1,0 +1,117 @@
+package net.xomak.damageareacalculator.objects.field;
+
+
+import net.xomak.damageareacalculator.PointsTuple;
+import net.xomak.damageareacalculator.objects.shapes.Point;
+import net.xomak.damageareacalculator.objects.shapes.Section;
+import net.xomak.damageareacalculator.objects.shapes.Shape;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+public class BattleField {
+    private double angle = 30;
+
+    private Set<Target> targets = new HashSet<>();
+    private Set<Launcher> launchers = new HashSet<>();
+    private Set<Obstacle> obstacles = new HashSet<>();
+
+    private static boolean inRange(final int left, final int right, final int value) {
+        return value >= left && value <= right;
+    }
+
+    public boolean addTarget(final Target target) {
+        return targets.add(target);
+    }
+
+    public boolean addObstacle(final Obstacle obstacle) {
+        return obstacles.add(obstacle);
+    }
+
+    public boolean addLauncher(final Launcher launcher) {
+        return launchers.add(launcher);
+    }
+
+    /**
+     * Checks, whether object is in damage area.
+     *
+     * @param damageArea Damage area, represented by two points
+     * @param object     Object
+     * @return
+     */
+    public boolean isInDamageArea(final PointsTuple damageArea, final Shape object) {
+        int leftX = damageArea.getTopLeft().getX();
+        int rightX = damageArea.getBottomRight().getX();
+        int topY = damageArea.getTopLeft().getY();
+        int bottomY = damageArea.getBottomRight().getY();
+
+
+        boolean byX = inRange(leftX, rightX, object.getTopLeft().getX()) ||
+                inRange(leftX, rightX, object.getBottomRight().getX());
+        boolean byY = inRange(topY, bottomY, object.getBottomRight().getY()) ||
+                inRange(topY, bottomY, object.getTopLeft().getY());
+        return byX && byY;
+    }
+
+    /**
+     * Returns map, containing Launchers and relevant available targets
+     *
+     * @return
+     */
+    public Map<Launcher, Set<Target>> getAllAchievableTarget() {
+        Map<Launcher, Set<Target>> result = new HashMap<>();
+        for (Launcher launcher : launchers) {
+            result.put(launcher, getTargetsAchievableFrom(launcher));
+        }
+        return result;
+    }
+
+    /**
+     * Returns set of targets, achievable from given launcher
+     *
+     * @param launcher Launcher
+     * @return Set of targets
+     */
+    public Set<Target> getTargetsAchievableFrom(final Launcher launcher) {
+        Set<Target> resultTargets = new HashSet<>();
+        PointsTuple damageArea = launcher.getDamageArea(angle);
+
+        Set<Target> potentialTargets = targets.stream()
+                .filter(target -> isInDamageArea(damageArea, target.getGeometricObject())).collect(Collectors.toSet());
+
+        if (potentialTargets.size() > 0) {
+            Set<Obstacle> potentialObstacles = obstacles.stream()
+                    .filter(obstacle -> isInDamageArea(damageArea, obstacle.getGeometricObject()))
+                    .collect(Collectors.toSet());
+
+            Set<FieldObject> obstaclesAndTargets = new HashSet<>();
+            obstaclesAndTargets.addAll(potentialObstacles);
+            obstaclesAndTargets.addAll(potentialTargets);
+
+            Set<Section> sectionsFromLauncher = launcher.getSectionsByAngle(angle);
+            resultTargets = sectionsFromLauncher.stream().map(section -> obstaclesAndTargets.stream()
+                        .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section)))
+                    .map(fields -> fields.min(new ByDistanceToPointComparator(launcher.getGeometricObject().getCenter())))
+                    .filter(nearestObject -> nearestObject.isPresent() && nearestObject.get().isTarget())
+                    .map(nearestObject -> (Target) nearestObject.get())
+                    .collect(Collectors.toSet());
+        }
+        return resultTargets;
+    }
+}
+
+class ByDistanceToPointComparator implements Comparator<FieldObject> {
+    private Point pointFrom;
+
+    public ByDistanceToPointComparator(final Point pointFrom) {
+        this.pointFrom = pointFrom;
+    }
+
+    @Override
+    public int compare(final FieldObject o1, final FieldObject o2) {
+
+        return pointFrom.getDistanceTo(o1.getGeometricObject().getCenter())
+                .compareTo(pointFrom.getDistanceTo(o2.getGeometricObject().getCenter()));
+    }
+}
