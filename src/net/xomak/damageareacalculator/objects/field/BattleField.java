@@ -21,11 +21,17 @@ public class BattleField {
         return value >= left && value <= right;
     }
 
-    public Set<Target> getTargets() {return targets;}
+    public Set<Target> getTargets() {
+        return targets;
+    }
 
-    public Set<Launcher> getLaunchers() {return launchers;}
+    public Set<Launcher> getLaunchers() {
+        return launchers;
+    }
 
-    public Set<Obstacle> getObstacles() {return obstacles;}
+    public Set<Obstacle> getObstacles() {
+        return obstacles;
+    }
 
     public Set<FieldObject> getAllObjects() {
         Set<FieldObject> obstaclesAndTargets = new HashSet<>();
@@ -73,8 +79,8 @@ public class BattleField {
      *
      * @return
      */
-    public Map<Launcher, Set<Target>> getAllAchievableTarget() {
-        Map<Launcher, Set<Target>> result = new HashMap<>();
+    public Map<Launcher, Set<FirePath>> getAllAchievableTarget() {
+        Map<Launcher, Set<FirePath>> result = new HashMap<>();
         for (Launcher launcher : launchers) {
             result.put(launcher, getTargetsAchievableFrom(launcher));
         }
@@ -85,10 +91,10 @@ public class BattleField {
      * Returns set of targets, achievable from given launcher
      *
      * @param launcher Launcher
-     * @return Set of targets
+     * @return Set of fire paths
      */
-    public Set<Target> getTargetsAchievableFrom(final Launcher launcher) {
-        Set<Target> resultTargets = new HashSet<>();
+    public Set<FirePath> getTargetsAchievableFrom(final Launcher launcher) {
+        Set<FirePath> resultTargets = new HashSet<>();
         PointsTuple damageArea = launcher.getDamageArea(angle);
 
         Set<Target> potentialTargets = targets.stream()
@@ -104,12 +110,14 @@ public class BattleField {
             obstaclesAndTargets.addAll(potentialTargets);
 
             Set<Section> sectionsFromLauncher = launcher.getSectionsByAngle(angle);
-            resultTargets = sectionsFromLauncher.stream().map(section -> obstaclesAndTargets.stream()
-                    .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section)))
-                    .map(fields -> fields.min(new ByDistanceToPointComparator(launcher.getGeometricObject().getCenter())))
-                    .filter(nearestObject -> nearestObject.isPresent() && nearestObject.get().isTarget())
-                    .map(nearestObject -> (Target) nearestObject.get())
-                    .collect(Collectors.toSet());
+            for(Section section : sectionsFromLauncher) {
+                Optional<FieldObject> nearestObject = obstaclesAndTargets.stream()
+                        .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section))
+                        .min(new ByDistanceToPointComparator(launcher.getGeometricObject().getCenter()));
+                if(nearestObject.isPresent() && nearestObject.get().isTarget()) {
+                    resultTargets.add(new FirePath((Target)nearestObject.get(), section));
+                }
+            }
         }
         return resultTargets;
     }

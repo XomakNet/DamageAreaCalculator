@@ -2,8 +2,8 @@ package net.xomak.damageareacalculator;
 
 import net.xomak.damageareacalculator.objects.MapVisualisation;
 import net.xomak.damageareacalculator.objects.field.BattleField;
+import net.xomak.damageareacalculator.objects.field.FirePath;
 import net.xomak.damageareacalculator.objects.field.Launcher;
-import net.xomak.damageareacalculator.objects.field.Target;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class Main {
 
 
         BattleField battleField = new BattleField();
-        Map<Launcher, Set<Target>> targets;
+        Map<Launcher, Set<FirePath>> targets;
         try {
             FileReader reader = new FileReader("input.txt");
             reader.addToMap(battleField);
