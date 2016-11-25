@@ -27,8 +27,8 @@ public class Launcher extends FieldObject {
     public PointsTuple getDamageArea(final double angle) {
         Point point = (Point)this.geometricObject;
         int cathetusLength = (int)(point.getY() * Math.tan(Math.toDegrees(angle)));
-        return new PointsTuple(new Point(point.getX() - cathetusLength, 0), new Point(point.getY(),
-                point.getX() + cathetusLength));
+        return new PointsTuple(new Point(point.getX() - cathetusLength, 0), new Point(point.getX() + cathetusLength,
+                point.getY()));
     }
 
     /**

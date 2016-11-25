@@ -21,7 +21,7 @@ public class Main {
             reader.addToMap(battleField);
             targets = battleField.getAllAchievableTarget();
             System.out.println(targets);
-            MapVisualisation map = new MapVisualisation(battleField, "map.png");
+            MapVisualisation map = new MapVisualisation(battleField, targets, "map.png");
             System.out.println("map.png saved in project directory");
         } catch (FileNotFoundException e) {
             e.printStackTrace();

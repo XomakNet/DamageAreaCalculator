@@ -34,4 +34,16 @@ public class CircleTest extends TestCase {
         Section section = new Section(new Point(1, 1), new Point(1, 7));
         Assert.assertEquals(true, circle.hasIntersectionWith(section));
     }
+
+    public void testHasIntersectionOneCircleInDataSet() throws Exception {
+        Circle circle = new Circle(new Point(44, 52), 1);
+        Section section = new Section(new Point(30, 90), new Point(64, 0));
+        Assert.assertEquals(true, circle.hasIntersectionWith(section));
+    }
+
+    public void testHasIntersectionLastCircleInDataSet() throws Exception {
+        Circle circle = new Circle(new Point(124, 40), 1);
+        Section section = new Section(new Point(123, 89), new Point(127, 3));
+        Assert.assertEquals(false, circle.hasIntersectionWith(section));
+    }
 }
