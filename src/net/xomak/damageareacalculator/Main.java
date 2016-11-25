@@ -11,6 +11,8 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
+
+
         BattleField battleField = new BattleField();
         Map<Launcher, Set<Target>> targets;
         try {
@@ -22,5 +24,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 }
