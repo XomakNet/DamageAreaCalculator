@@ -49,6 +49,7 @@ public class Launcher extends FieldObject {
         return result;
     }
 
+
     @Override
     public String toString() {
         return "Launcher{id=" + id + '}';

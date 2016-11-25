@@ -1,9 +1,7 @@
-package net.xomak.damageareacalculator.objects;
+package net.xomak.damageareacalculator.objects.shapes;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import net.xomak.damageareacalculator.objects.shapes.Point;
-import net.xomak.damageareacalculator.objects.shapes.Section;
 
 public class SectionTest extends TestCase {
 

@@ -11,16 +11,27 @@ public class CircleTest extends TestCase {
         Assert.assertEquals(true, circle.hasIntersectionWith(section));
     }
 
+    public void testHasIntersectionWith_sectionWhenItHasTwo() throws Exception {
+        Circle circle = new Circle(new Point(3, 3), 2);
+        Section section = new Section(new Point(0, 1), new Point(6, 2));
+        Assert.assertEquals(true, circle.hasIntersectionWith(section));
+    }
+
     public void testHasIntersectionWith_sectionWhenItHasNot() throws Exception {
         Circle circle = new Circle(new Point(3, 3), 2);
         Section section = new Section(new Point(8, 2), new Point(6, 2));
         Assert.assertEquals(false, circle.hasIntersectionWith(section));
     }
 
-    public void testHasIntersectionWith_sectionWhenItIsTangent() throws Exception {
+    public void testHasIntersectionWith_sectionWhenItIsTangentVertical() throws Exception {
         Circle circle = new Circle(new Point(3, 3), 2);
         Section section = new Section(new Point(1, 1), new Point(1, 7));
         Assert.assertEquals(true, circle.hasIntersectionWith(section));
     }
 
+    public void testHasIntersectionWith_sectionWhenItIsTangentHorizontal() throws Exception {
+        Circle circle = new Circle(new Point(3, 3), 2);
+        Section section = new Section(new Point(1, 1), new Point(1, 7));
+        Assert.assertEquals(true, circle.hasIntersectionWith(section));
+    }
 }
