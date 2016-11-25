@@ -5,12 +5,13 @@ import static java.lang.Math.pow;
 public class Circle extends Shape {
     private Point center;
     private int radius;
-    private static final double EPS = 0.001;
 
     public Circle(final Point center, final int radius) {
         this.center = center;
         this.radius = radius;
     }
+
+    public int getDiameter() {return 2 * radius;}
 
     public boolean hasIntersectionWith(final Section section) {
         Point relatFirst, relatSecond;

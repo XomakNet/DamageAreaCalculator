@@ -11,6 +11,10 @@ public class Rectangle extends Shape {
     private int width;
     private int height;
 
+    public int getWidth() {return width;}
+
+    public int getHeight() {return height;}
+
     public Rectangle(final Point topLeft, final int width, final int height) {
         this.topLeft = topLeft;
         this.width = width;
