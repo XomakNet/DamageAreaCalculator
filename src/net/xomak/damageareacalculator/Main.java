@@ -1,5 +1,6 @@
 package net.xomak.damageareacalculator;
 
+import net.xomak.damageareacalculator.objects.MapVisualisation;
 import net.xomak.damageareacalculator.objects.field.BattleField;
 import net.xomak.damageareacalculator.objects.field.Launcher;
 import net.xomak.damageareacalculator.objects.field.Target;
@@ -20,6 +21,8 @@ public class Main {
             reader.addToMap(battleField);
             targets = battleField.getAllAchievableTarget();
             System.out.println(targets);
+            MapVisualisation map = new MapVisualisation(battleField, "map.png");
+            System.out.println("map.png saved in project directory");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

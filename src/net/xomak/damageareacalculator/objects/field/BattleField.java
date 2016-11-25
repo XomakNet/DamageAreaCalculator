@@ -21,6 +21,20 @@ public class BattleField {
         return value >= left && value <= right;
     }
 
+    public Set<Target> getTargets() {return targets;}
+
+    public Set<Launcher> getLaunchers() {return launchers;}
+
+    public Set<Obstacle> getObstacles() {return obstacles;}
+
+    public Set<FieldObject> getAllObjects() {
+        Set<FieldObject> obstaclesAndTargets = new HashSet<>();
+        obstaclesAndTargets.addAll(targets);
+        obstaclesAndTargets.addAll(obstacles);
+        obstaclesAndTargets.addAll(launchers);
+        return obstaclesAndTargets;
+    }
+
     public boolean addTarget(final Target target) {
         return targets.add(target);
     }
@@ -91,7 +105,7 @@ public class BattleField {
 
             Set<Section> sectionsFromLauncher = launcher.getSectionsByAngle(angle);
             resultTargets = sectionsFromLauncher.stream().map(section -> obstaclesAndTargets.stream()
-                        .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section)))
+                    .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section)))
                     .map(fields -> fields.min(new ByDistanceToPointComparator(launcher.getGeometricObject().getCenter())))
                     .filter(nearestObject -> nearestObject.isPresent() && nearestObject.get().isTarget())
                     .map(nearestObject -> (Target) nearestObject.get())

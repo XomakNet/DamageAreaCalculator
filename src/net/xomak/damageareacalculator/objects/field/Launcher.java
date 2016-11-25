@@ -15,9 +15,9 @@ public class Launcher extends FieldObject {
     }
 
     @Override
-    public boolean isTarget() {
-        return false;
-    }
+    public boolean isTarget()  {return false;}
+    public boolean isObstacle(){return false;}
+    public boolean isLauncher(){return true; }
 
     /**
      * Returns potential damage area for this launcher, if it has given attack angle.

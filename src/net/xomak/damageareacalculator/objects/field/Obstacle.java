@@ -9,9 +9,9 @@ public class Obstacle extends FieldObject {
     }
 
     @Override
-    public boolean isTarget() {
-        return false;
-    }
+    public boolean isTarget()  {return false;}
+    public boolean isObstacle(){return true; }
+    public boolean isLauncher(){return false;}
 
     @Override
     public String toString() {

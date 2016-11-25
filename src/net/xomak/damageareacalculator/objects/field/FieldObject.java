@@ -20,6 +20,8 @@ public abstract class FieldObject {
     }
 
     public abstract boolean isTarget();
+    public abstract boolean isObstacle();
+    public abstract boolean isLauncher();
 
     @Override
     public boolean equals(final Object o) {
