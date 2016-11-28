@@ -8,9 +8,20 @@ public class Target extends FieldObject {
     }
 
     @Override
-    public boolean isTarget()  {return true; }
-    public boolean isObstacle(){return false;}
-    public boolean isLauncher(){return false;}
+    public boolean isTarget() {
+        return true;
+    }
+
+    @Override
+    public boolean isObstacle() {
+        return false;
+    }
+
+    @Override
+    public boolean isLauncher() {
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Target{id=" + id + '}';

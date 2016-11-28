@@ -13,9 +13,13 @@ public class Section extends Shape {
         this.p2 = p2;
     }
 
-    public Point getP1() {return p1;}
+    public Point getP1() {
+        return p1;
+    }
 
-    public Point getP2() {return p2;}
+    public Point getP2() {
+        return p2;
+    }
 
     @Override
     public boolean hasIntersectionWith(final Shape shape) {
@@ -66,7 +70,7 @@ public class Section extends Shape {
     }
 
     private double pseudoScalar(final Point a, final Point b, final Point c) {
-        return  ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
+        return ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 
     public boolean isCollinearWith(final Section another) {
@@ -84,6 +88,10 @@ public class Section extends Shape {
         } else {
             return false;
         }
+    }
+
+    public void accept(final ShapeVisitor v) {
+        v.visit(this);
     }
 
     public boolean hasIntersectionWith(final Section another) {

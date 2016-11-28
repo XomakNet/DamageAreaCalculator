@@ -12,7 +12,9 @@ public class Point extends Shape {
         this.y = y;
     }
 
-    public int getX() {return x;}
+    public int getX() {
+        return x;
+    }
 
     public int getY() {
         return y;
@@ -26,8 +28,12 @@ public class Point extends Shape {
                 '}';
     }
 
+    public void accept(final ShapeVisitor v) {
+        v.visit(this);
+    }
+
     public Double getDistanceTo(final Point another) {
-        return Math.sqrt(Math.pow(this.getX() - another.getX(), 2) + Math.pow(this.getY()-another.getY(), 2));
+        return Math.sqrt(Math.pow(this.getX() - another.getX(), 2) + Math.pow(this.getY() - another.getY(), 2));
     }
 
     @Override

@@ -15,18 +15,29 @@ public class Launcher extends FieldObject {
     }
 
     @Override
-    public boolean isTarget()  {return false;}
-    public boolean isObstacle(){return false;}
-    public boolean isLauncher(){return true; }
+    public boolean isTarget() {
+        return false;
+    }
+
+    @Override
+    public boolean isObstacle() {
+        return false;
+    }
+
+    @Override
+    public boolean isLauncher() {
+        return true;
+    }
 
     /**
      * Returns potential damage area for this launcher, if it has given attack angle.
+     *
      * @param angle Angle, considered as angle from start position to the left or right outermost
      * @return PointsTuple, restricting damage area
      */
     public PointsTuple getDamageArea(final double angle) {
-        Point point = (Point)this.geometricObject;
-        int cathetusLength = (int)(point.getY() * Math.tan(Math.toDegrees(angle)));
+        Point point = (Point) this.geometricObject;
+        int cathetusLength = (int) (point.getY() * Math.tan(Math.toDegrees(angle)));
         return new PointsTuple(new Point(point.getX() - cathetusLength, 0), new Point(point.getX() + cathetusLength,
                 point.getY()));
     }
@@ -34,16 +45,17 @@ public class Launcher extends FieldObject {
     /**
      * Returns set of Sections, starting from this launcher and going to all points, situated on cathetusis of triangle,
      * formed given angle
+     *
      * @param angle Angle, considered as angle from start position to the left or right outermost
      * @return Set of sections
      */
     public Set<Section> getSectionsByAngle(final double angle) {
-        Point point = (Point)this.geometricObject;
+        Point point = (Point) this.geometricObject;
         Set<Section> result = new HashSet<>();
         PointsTuple damageArea = getDamageArea(angle);
         int startX = damageArea.getTopLeft().getX() < 0 ? 0 : damageArea.getTopLeft().getX();
         int endX = damageArea.getBottomRight().getX();
-        for(int currentX = startX; currentX < endX; currentX++) {
+        for (int currentX = startX; currentX < endX; currentX++) {
             result.add(new Section(point, new Point(currentX, 0)));
         }
         return result;

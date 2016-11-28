@@ -1,11 +1,11 @@
 package net.xomak.damageareacalculator;
 
-import net.xomak.damageareacalculator.objects.shapes.Point;
 import net.xomak.damageareacalculator.objects.field.BattleField;
 import net.xomak.damageareacalculator.objects.field.Launcher;
 import net.xomak.damageareacalculator.objects.field.Obstacle;
 import net.xomak.damageareacalculator.objects.field.Target;
 import net.xomak.damageareacalculator.objects.shapes.Circle;
+import net.xomak.damageareacalculator.objects.shapes.Point;
 import net.xomak.damageareacalculator.objects.shapes.Rectangle;
 import net.xomak.damageareacalculator.objects.shapes.Shape;
 
@@ -14,9 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/**
- * Created by regis on 24.11.2016.
- */
+
 public class FileReader {
     private File file;
     private Scanner sc;
@@ -33,7 +31,7 @@ public class FileReader {
     private void addToMap(final BattleField battleField, final Shape geometricObject, final String type) {
         int id = ids.get(type) + 1;
         ids.put(type, id);
-        switch(type) {
+        switch (type) {
             case "target":
                 battleField.addTarget(new Target(geometricObject, id));
                 break;
@@ -47,13 +45,13 @@ public class FileReader {
     }
 
     public void addToMap(final BattleField battleField) {
-        while(sc.hasNext()) {
+        while (sc.hasNext()) {
             Shape geometricObject;
             String type = sc.next();
             int x = sc.nextInt();
             int y = sc.nextInt();
             Point point = new Point(x, y);
-            if(sc.hasNextInt()) {
+            if (sc.hasNextInt()) {
                 int width = sc.nextInt();
                 if (sc.hasNextInt()) {
                     int height = sc.nextInt();
@@ -61,8 +59,7 @@ public class FileReader {
                 } else {
                     geometricObject = new Circle(point, width);
                 }
-            }
-            else {
+            } else {
                 geometricObject = point;
             }
             addToMap(battleField, geometricObject, type);

@@ -110,12 +110,12 @@ public class BattleField {
             obstaclesAndTargets.addAll(potentialTargets);
 
             Set<Section> sectionsFromLauncher = launcher.getSectionsByAngle(angle);
-            for(Section section : sectionsFromLauncher) {
+            for (Section section : sectionsFromLauncher) {
                 Optional<FieldObject> nearestObject = obstaclesAndTargets.stream()
                         .filter(fieldObject -> fieldObject.getGeometricObject().hasIntersectionWith(section))
                         .min(new ByDistanceToPointComparator(launcher.getGeometricObject().getCenter()));
-                if(nearestObject.isPresent() && nearestObject.get().isTarget()) {
-                    resultTargets.add(new FirePath((Target)nearestObject.get(), section));
+                if (nearestObject.isPresent() && nearestObject.get().isTarget()) {
+                    resultTargets.add(new FirePath((Target) nearestObject.get(), section));
                 }
             }
         }

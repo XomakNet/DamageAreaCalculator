@@ -11,7 +11,13 @@ public class Circle extends Shape {
         this.radius = radius;
     }
 
-    public int getDiameter() {return 2 * radius;}
+    public int getDiameter() {
+        return 2 * radius;
+    }
+
+    public void accept(final ShapeVisitor v) {
+        v.visit(this);
+    }
 
     public boolean hasIntersectionWith(final Section section) {
         Point relatFirst, relatSecond;
@@ -19,17 +25,17 @@ public class Circle extends Shape {
         relatFirst = new Point(section.getP1().getX() - center.getX(), section.getP1().getY() - center.getY());
         relatSecond = new Point(section.getP2().getX() - center.getX(), section.getP2().getY() - center.getY());
 
-        double a= pow(relatSecond.getX() - relatFirst.getX(),2) + pow(relatSecond.getY() - relatFirst.getY(),2);
-        double b= 2*(relatFirst.getX()*(relatSecond.getX() - relatFirst.getX())
-                + relatFirst.getY()*(relatSecond.getY() - relatFirst.getY()));
-        double c = pow(relatFirst.getX(),2) + pow(relatFirst.getY(),2) - radius*radius;
+        double a = pow(relatSecond.getX() - relatFirst.getX(), 2) + pow(relatSecond.getY() - relatFirst.getY(), 2);
+        double b = 2 * (relatFirst.getX() * (relatSecond.getX() - relatFirst.getX())
+                + relatFirst.getY() * (relatSecond.getY() - relatFirst.getY()));
+        double c = pow(relatFirst.getX(), 2) + pow(relatFirst.getY(), 2) - radius * radius;
 
         if (-b < 0)
             return (c < 0);
-        if (-b < (2*a))
-            return (4*a*c - b*b <= 0); // <= for find tangent intersection
+        if (-b < (2 * a))
+            return (4 * a * c - b * b <= 0); // <= for find tangent intersection
 
-        return (a+b+c < 0);
+        return (a + b + c < 0);
     }
 
     @Override

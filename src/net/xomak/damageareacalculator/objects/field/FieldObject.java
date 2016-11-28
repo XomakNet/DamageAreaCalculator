@@ -7,27 +7,27 @@ import net.xomak.damageareacalculator.objects.shapes.Shape;
  */
 public abstract class FieldObject {
 
-    public Shape getGeometricObject() {
-        return geometricObject;
-    }
-
     protected Shape geometricObject;
     protected int id;
-
     public FieldObject(final Shape geometricObject, final int id) {
         this.geometricObject = geometricObject;
         this.id = id;
     }
 
+    public Shape getGeometricObject() {
+        return geometricObject;
+    }
+
     public abstract boolean isTarget();
+
     public abstract boolean isObstacle();
+
     public abstract boolean isLauncher();
 
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (this.getClass().equals(o.getClass()))
-        {
+        if (this.getClass().equals(o.getClass())) {
             FieldObject that = (FieldObject) o;
 
             return id == that.id;

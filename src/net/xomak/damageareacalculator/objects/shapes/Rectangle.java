@@ -3,22 +3,23 @@ package net.xomak.damageareacalculator.objects.shapes;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by regis on 24.11.2016.
- */
 public class Rectangle extends Shape {
     private Point topLeft;
     private int width;
     private int height;
 
-    public int getWidth() {return width;}
-
-    public int getHeight() {return height;}
-
     public Rectangle(final Point topLeft, final int width, final int height) {
         this.topLeft = topLeft;
         this.width = width;
         this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public Set<Section> getBounds() {
@@ -42,6 +43,10 @@ public class Rectangle extends Shape {
             }
         }
         return false;
+    }
+
+    public void accept(final ShapeVisitor v) {
+        v.visit(this);
     }
 
     @Override
