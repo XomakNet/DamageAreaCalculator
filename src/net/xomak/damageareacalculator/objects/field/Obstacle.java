@@ -14,6 +14,16 @@ public class Obstacle extends FieldObject {
     }
 
     @Override
+    public boolean isObstacle() {
+        return true;
+    }
+
+    @Override
+    public boolean isLauncher() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Obstacle{id=" + id + '}';
     }
